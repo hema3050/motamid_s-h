@@ -1,5 +1,5 @@
 {
-  "name": "s-h",
+  "name": "motamid_s-h",
   "version": "1.0.0",
   "description": "A payment processing application with a simple web interface and SQLite database.",
   "main": "server.js",
