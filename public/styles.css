@@ -1,0 +1,162 @@
+/* أنماط عامة */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* زيادة العرض الأقصى لملء الشاشة بشكل أفضل */
+    box-sizing: border-box;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+input, select {
+    margin-bottom: 12px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+select {
+    background-color: #fafafa;
+    color: #333;
+}
+
+option {
+    background-color: #fff;
+    color: #333;
+}
+
+button {
+    padding: 12px;
+    background-color: #28a745;
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+/* أنماط صفحة عرض البيانات */
+.data-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+}
+
+.data-content {
+    margin-top: 20px;
+}
+
+.data-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.data-item h2 {
+    margin-top: 0;
+    font-size: 22px;
+    color: #333;
+}
+
+.data-item div {
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.data-item div:last-child {
+    border-bottom: none;
+}
+
+button {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: 20px auto;
+    background-color: #007bff;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* تحسينات استجابة التصميم */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        max-width: 500px;
+    }
+
+    .data-container {
+        width: 95%;
+        max-width: 900px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    form {
+        flex-direction: column;
+    }
+
+    input, select, button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .data-item {
+        padding: 15px;
+    }
+
+    .data-item h2 {
+        font-size: 18px;
+    }
+}

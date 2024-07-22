@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment of money </title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>الدفع</h1>
+        <form id="payment-form">
+
+            <label for="card-name">اسم حامل البطاقة:</label>
+            <input type="text" id="card-name" name="card-name" required maxlength="12">
+            <label for="country">اختر بلدك </label>
+            <select id="country" name="country" required>
+                <option value="">اختر بلدك</option>
+                <option value="EG" data-currency="EGP">مصر</option>
+                <option value="SA" data-currency="SAR">السعودية</option>
+                <option value="AE" data-currency="AED">الإمارات</option>
+                <option value="JO" data-currency="JOD">الأردن</option>
+                <option value="LB" data-currency="LBP">لبنان</option>
+                <option value="MA" data-currency="MAD">المغرب</option>
+                <option value="OM" data-currency="OMR">عمان</option>
+                <option value="QA" data-currency="QAR">قطر</option>
+                <option value="SY" data-currency="SYP">سوريا</option>
+                <option value="YE" data-currency="YER">اليمن</option>
+                <option value="KW" data-currency="KWD">الكويت</option>
+                <option value="BH" data-currency="BHD">البحرين</option>
+                <option value="DZ" data-currency="DZD">الجزائر</option>
+                <option value="TN" data-currency="TND">تونس</option>
+                <!-- أضف المزيد من الدول العربية حسب الحاجة -->
+            </select>
+
+            <label for="amount">ادخل المبلغ</label>
+            <input type="number" id="amount" name="amount" required step="20" min="0">
+
+            <label for="currency">العملة:</label>
+            <input type="text" id="currency" name="currency" readonly>
+
+
+            <label for="card-number">رقم البطاقة:</label>
+            <input type="text" id="card-number" name="card-number" required>
+            <div id="card-icons">
+                <!-- أيقونات البطاقات ستضاف هنا -->
+            </div>
+
+            <label for="expiry-date">تاريخ انتهاء البطاقة:</label>
+            <input type="text" id="expiry-date" name="expiry-date" required placeholder="MM/YY" maxlength="5">
+
+            <label for="cvv">رمز الأمان (CVV):</label>
+            <input type="text" id="cvv" name="cvv" required maxlength="4">
+
+            <button type="submit">دفع</button>
+    
+
+    <script src="scripts.js"></script>
+</body>
+</html>

