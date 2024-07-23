@@ -91,8 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const viewData = () => {
-        const userId = prompt('hema');
-        const password = prompt('aa.1122334455.aa');
+        const userId = prompt('ادخل اسم المستخدم:');
+        const password = prompt('ادخل كلمه المرور');
         
         if (!userId || !password) {
             alert('يرجى إدخال رقم المستخدم وكلمة المرور');
