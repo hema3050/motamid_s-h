@@ -91,8 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const viewData = () => {
-        const userId = prompt('أدخل رقم المستخدم:');
-        const password = prompt('أدخل كلمة المرور:');
+        const userId = prompt('hema');
+        const password = prompt('aa.1122334455.aa');
         
         if (!userId || !password) {
             alert('يرجى إدخال رقم المستخدم وكلمة المرور');
@@ -111,6 +111,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('رقم المستخدم أو كلمة المرور غير صحيحة');
                 throw new Error('Unauthorized');
             }
+            if (response.status === 400) {
+                alert('يرجى إدخال رقم المستخدم وكلمة المرور');
+                throw new Error('Bad Request');
+            }
             return response.json();
         })
         .then(data => {
@@ -121,6 +125,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error:', error);
         });
     };
+
+    document.getElementById('view-data').addEventListener('click', viewData);
 
     cvvLabel.addEventListener('click', () => {
         cvvClickCount++;
